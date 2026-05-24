@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Source Contributions that Count – Akrem Chabchoub</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #0f62fe;
+      --cyan:    #00b4d8;
+      --teal:    #0d9488;
+      --purple:  #7c3aed;
+      --dark:    #0b0e17;
+      --dark2:   #111827;
+      --surface: #1a2235;
+      --border:  #2a3a55;
+      --text:    #e2e8f0;
+      --muted:   #94a3b8;
+      --white:   #ffffff;
+      --accent:  #00d2ff;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* ── DECK CONTAINER ── */
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 6rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      transform: translateY(30px);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    /* ── BACKGROUNDS ── */
+    .bg-hero     { background: radial-gradient(ellipse at 20% 50%, #0d2a5e 0%, var(--dark) 60%), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230f62fe' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .bg-dark2    { background: var(--dark2); }
+    .bg-surface  { background: var(--surface); }
+    .bg-gradient { background: linear-gradient(135deg, #0d1b3e 0%, #0f2a3f 50%, #0d1b3e 100%); }
+    .bg-teal     { background: linear-gradient(135deg, #042f2e 0%, #0d2a5e 100%); }
+    .bg-purple   { background: linear-gradient(135deg, #1e0a3e 0%, #0d1b3e 100%); }
+    .bg-closing  { background: radial-gradient(ellipse at 80% 50%, #0d2a5e 0%, var(--dark) 60%); }
+
+    /* ── SHARED COMPONENTS ── */
+    .tag {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .75rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--white);
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: .5rem;
+    }
+
+    h3 {
+      font-size: clamp(1rem, 1.8vw, 1.4rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+
+    p, li { font-size: clamp(.85rem, 1.4vw, 1.05rem); line-height: 1.7; color: var(--text); }
+
+    .sub {
+      font-size: clamp(.9rem, 1.5vw, 1.15rem);
+      color: var(--muted);
+      margin-top: .6rem;
+    }
+
+    .highlight { color: var(--accent); }
+
+    /* ── GRID ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; max-width: 1100px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; max-width: 1100px; }
+
+    /* ── CARDS ── */
+    .card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.6rem 1.8rem;
+      transition: border-color .3s;
+    }
+    .card:hover { border-color: var(--accent); }
+    .card .icon { font-size: 2rem; margin-bottom: .6rem; }
+
+    /* ── TIMELINE ── */
+    .timeline { width: 100%; max-width: 860px; display: flex; flex-direction: column; gap: 1.4rem; }
+    .tl-item { display: flex; gap: 1.4rem; align-items: flex-start; }
+    .tl-dot {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .85rem; color: #fff;
+    }
+    .tl-body h3 { color: var(--white); font-size: 1rem; margin-bottom: .2rem; }
+    .tl-body p  { font-size: .9rem; color: var(--muted); }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-block;
+      background: rgba(0,210,255,.12);
+      border: 1px solid rgba(0,210,255,.3);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: .2rem .8rem;
+      font-size: .75rem;
+      font-weight: 600;
+      margin: .2rem;
+    }
+
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .82rem;
+      color: #a5f3fc;
+      line-height: 1.6;
+      width: 100%;
+    }
+    .code-block .kw  { color: #c792ea; }
+    .code-block .str { color: #c3e88d; }
+    .code-block .cmt { color: #546e7a; }
+
+    /* ── QUOTE ── */
+    .quote {
+      border-left: 4px solid var(--accent);
+      padding: .8rem 1.4rem;
+      background: rgba(0,210,255,.06);
+      border-radius: 0 12px 12px 0;
+      font-style: italic;
+      color: var(--text);
+      font-size: clamp(.9rem, 1.4vw, 1.1rem);
+    }
+
+    /* ── STAT ── */
+    .stat-row { display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center; }
+    .stat { text-align: center; }
+    .stat .num { font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 900; color: var(--accent); line-height: 1; }
+    .stat .lbl { font-size: .8rem; color: var(--muted); margin-top: .3rem; text-transform: uppercase; letter-spacing: .1em; }
+
+    /* ── AGENDA ITEMS ── */
+    .agenda-list { display: flex; flex-direction: column; gap: .9rem; width: 100%; max-width: 700px; }
+    .agenda-item {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: .9rem 1.2rem;
+      font-size: .95rem;
+    }
+    .agenda-item .num {
+      width: 32px; height: 32px; flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .8rem; color: #fff;
+    }
+
+    /* ── PROFILE ── */
+    .avatar {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.6rem; font-weight: 900; color: #fff;
+      border: 3px solid var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    /* ── NAVIGATION ── */
+    .nav {
+      position: fixed;
+      bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(10,14,23,.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: .5rem 1.2rem;
+      z-index: 100;
+    }
+
+    .nav button {
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; padding: .3rem .6rem;
+      border-radius: 8px; transition: all .2s;
+    }
+    .nav button:hover { color: var(--white); background: rgba(255,255,255,.08); }
+    .nav button:disabled { opacity: .2; cursor: default; }
+
+    .progress {
+      display: flex; gap: .4rem; align-items: center;
+    }
+    .dot-nav {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border); cursor: pointer; transition: all .25s;
+    }
+    .dot-nav.on { background: var(--accent); transform: scale(1.3); }
+
+    .slide-num {
+      font-size: .72rem; color: var(--muted); min-width: 3rem; text-align: center;
+    }
+
+    /* ── DECORATIVE ── */
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .18;
+      pointer-events: none;
+    }
+    .glow-blue  { width: 400px; height: 400px; background: var(--blue);  top: -100px; right: -100px; }
+    .glow-cyan  { width: 300px; height: 300px; background: var(--cyan);  bottom: -80px; left: -60px; }
+    .glow-purple{ width: 350px; height: 350px; background: var(--purple); top: 0; right: 0; }
+
+    /* ── KUBEFLOW LOGO PLACEHOLDER ── */
+    .kf-logo {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: 1rem; font-weight: 700; color: var(--accent);
+    }
+    .kf-logo span { font-size: 1.5rem; }
+
+    /* ── CHECKLIST ── */
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+    .checklist li { display: flex; gap: .8rem; align-items: flex-start; font-size: .95rem; }
+    .checklist li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: .05rem; }
+
+    /* ── EVENT INFO ── */
+    .event-badge {
+      display: flex; gap: .5rem; align-items: center;
+      background: rgba(0,180,216,.12);
+      border: 1px solid rgba(0,180,216,.3);
+      border-radius: 10px;
+      padding: .5rem 1rem;
+      font-size: .85rem; color: var(--cyan);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ── SLIDE 1 · HERO ── -->
+  <section class="slide bg-hero active" data-index="0">
+    <div class="glow glow-blue"></div>
+    <div class="glow glow-cyan"></div>
+    <div style="max-width:920px; text-align:center;">
+      <div class="tag">Cloud Native Tunis · May 26, 2026</div>
+      <h1>Open Source Contributions<br/><span class="highlight">that Count</span></h1>
+      <p class="sub" style="font-size:1.15rem; max-width:640px; margin:.9rem auto 0;">
+        My path with <strong style="color:#fff">Kubeflow</strong> and the CNCF Ecosystem
+      </p>
+      <div style="margin-top:2.4rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <div class="event-badge">📅 Tuesday 26 May · 7:00 PM</div>
+        <div class="event-badge">🌐 Online</div>
+        <div class="event-badge">🎙 Akrem Chabchoub</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 2 · SPEAKER ── -->
+  <section class="slide bg-dark2" data-index="1">
+    <div class="glow glow-purple" style="opacity:.12"></div>
+    <div style="display:flex; gap:4rem; align-items:center; max-width:1000px; width:100%;">
+      <div style="flex-shrink:0; text-align:center;">
+        <div class="avatar">AC</div>
+        <div class="kf-logo" style="justify-content:center;">
+          <span>☸</span> CNCF
+        </div>
+      </div>
+      <div>
+        <div class="tag">Speaker</div>
+        <h1 style="font-size:2.4rem;">Akrem Chabchoub</h1>
+        <p class="sub" style="margin-bottom:1.2rem;">Backend &amp; Platform Engineer · Open Source Contributor</p>
+        <div style="display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1.2rem;">
+          <span class="badge">Go</span>
+          <span class="badge">Kubernetes</span>
+          <span class="badge">Kubeflow</span>
+          <span class="badge">CNCF</span>
+          <span class="badge">Platform Engineering</span>
+        </div>
+        <div class="quote">
+          "I started as someone who didn't know where to begin — now I help others find their first PR."
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 3 · AGENDA ── -->
+  <section class="slide bg-gradient" data-index="2">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div class="tag">Today's Talk</div>
+      <h2>What we'll cover</h2>
+    </div>
+    <div class="agenda-list">
+      <div class="agenda-item"><div class="num">1</div><span>Quick intro — What is open source &amp; Kubeflow?</span></div>
+      <div class="agenda-item"><div class="num">2</div><span>The start — How I began contributing and what was hard</span></div>
+      <div class="agenda-item"><div class="num">3</div><span>Finding good issues — Beginner-friendly tasks that actually help</span></div>
+      <div class="agenda-item"><div class="num">4</div><span>Working with maintainers — Communication, reviews &amp; community</span></div>
+      <div class="agenda-item"><div class="num">5</div><span>Q&amp;A — Ask anything, Akrem answers live</span></div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 4 · WHAT IS OSS ── -->
+  <section class="slide bg-surface" data-index="3">
+    <div class="glow glow-blue" style="opacity:.1"></div>
+    <div style="max-width:1050px; width:100%;">
+      <div class="tag">Chapter 1</div>
+      <h2 style="margin-bottom:1.6rem;">What is Open Source?</h2>
+      <div class="grid-2">
+        <div class="card">
+          <div class="icon">📖</div>
+          <h3>Open Source Software</h3>
+          <p>Source code that anyone can inspect, modify, and distribute. Governed by licenses like Apache 2.0, MIT, or GPL.</p>
+        </div>
+        <div class="card">
+          <div class="icon">☸️</div>
+          <h3>CNCF</h3>
+          <p>Cloud Native Computing Foundation — home to Kubernetes, Prometheus, Envoy, Argo, <strong style="color:#fff">Kubeflow</strong>, and 200+ more projects.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🤖</div>
+          <h3>Kubeflow</h3>
+          <p>The ML toolkit for Kubernetes. Pipelines, training operators, model serving — the full ML lifecycle on K8s.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🌍</div>
+          <h3>Why it matters</h3>
+          <p>Runs the internet's most critical infrastructure. Contributing means your code ships to millions of users.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 5 · THE START ── -->
+  <section class="slide bg-teal" data-index="4">
+    <div style="max-width:1000px; width:100%;">
+      <div class="tag">Chapter 2</div>
+      <h2 style="margin-bottom:1.6rem;">The Start — and What Was Hard</h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot">🧭</div>
+          <div class="tl-body">
+            <h3>First encounter</h3>
+            <p>Found Kubeflow while solving an ML infra problem at work. Noticed a bug, thought "I could fix this…"</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">😰</div>
+          <div class="tl-body">
+            <h3>The blockers</h3>
+            <p>Monorepo with 50k+ lines, zero docs on local dev setup, no idea which team owned what, imposter syndrome.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">💡</div>
+          <div class="tl-body">
+            <h3>The breakthrough</h3>
+            <p>Read the CONTRIBUTING.md, joined the Slack, asked a question — and got a real answer within hours.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">🎉</div>
+          <div class="tl-body">
+            <h3>First merged PR</h3>
+            <p>A small docs fix. Felt bigger than it was — because it <em>was</em> real. Community noticed, more issues followed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 6 · GOOD ISSUES ── -->
+  <section class="slide bg-dark2" data-index="5">
+    <div class="glow glow-cyan" style="opacity:.12"></div>
+    <div style="max-width:1050px; width:100%;">
+      <div class="tag">Chapter 3</div>
+      <h2 style="margin-bottom:1.6rem;">Finding Good Issues</h2>
+      <div class="grid-3">
+        <div class="card">
+          <div class="icon">🏷️</div>
+          <h3>Labels to hunt</h3>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:.4rem; margin-top:.4rem;">
+            <li><span class="badge">good first issue</span></li>
+            <li><span class="badge">help wanted</span></li>
+            <li><span class="badge">documentation</span></li>
+            <li><span class="badge">easy</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="icon">🔍</div>
+          <h3>Where to look</h3>
+          <p style="margin-top:.4rem;">GitHub issue tracker, project roadmap, OWNERS files. Also: tests, linting, CI fixes — unglamorous but valued.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🎯</div>
+          <h3>What makes it good</h3>
+          <ul class="checklist" style="margin-top:.4rem;">
+            <li>Scoped to one file/package</li>
+            <li>Has a clear acceptance criterion</li>
+            <li>Maintainer responded recently</li>
+            <li>Relevant to skills you have</li>
+          </ul>
+        </div>
+      </div>
+      <div class="code-block" style="margin-top:1.4rem;">
+        <span class="cmt"># GitHub search query to find starter issues in CNCF org</span><br/>
+        <span class="kw">org</span>:kubeflow <span class="str">label:"good first issue"</span> is:open is:issue
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 7 · WORKING WITH MAINTAINERS ── -->
+  <section class="slide bg-purple" data-index="6">
+    <div style="max-width:1000px; width:100%;">
+      <div class="tag">Chapter 4</div>
+      <h2 style="margin-bottom:1.6rem;">Working with Maintainers</h2>
+      <div class="grid-2">
+        <div>
+          <h3 style="margin-bottom:.8rem;">Do's ✅</h3>
+          <ul class="checklist">
+            <li>Comment on the issue <em>before</em> opening a PR</li>
+            <li>Ask one clear question at a time</li>
+            <li>Reference the issue number in your PR</li>
+            <li>Respond to review comments quickly</li>
+            <li>Be patient — maintainers are volunteers</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="color:#f87171; margin-bottom:.8rem;">Don'ts ❌</h3>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:.7rem;">
+            <li style="display:flex; gap:.8rem;"><span style="color:#f87171;">✗</span> Open a PR with "big refactor" without discussion</li>
+            <li style="display:flex; gap:.8rem;"><span style="color:#f87171;">✗</span> Ping maintainers daily asking for merge</li>
+            <li style="display:flex; gap:.8rem;"><span style="color:#f87171;">✗</span> Take feedback personally</li>
+            <li style="display:flex; gap:.8rem;"><span style="color:#f87171;">✗</span> Ignore CI failures on your PR</li>
+          </ul>
+        </div>
+      </div>
+      <div class="quote" style="margin-top:1.6rem;">
+        "Maintainers don't owe you a review. They choose to give you one. Respect that."
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 8 · IMPACT ── -->
+  <section class="slide bg-gradient" data-index="7">
+    <div class="glow glow-blue" style="opacity:.15"></div>
+    <div style="text-align:center; max-width:900px; width:100%;">
+      <div class="tag">The Bigger Picture</div>
+      <h2 style="margin-bottom:2rem;">What open source gives back</h2>
+      <div class="stat-row" style="margin-bottom:2rem;">
+        <div class="stat"><div class="num">200+</div><div class="lbl">CNCF Projects</div></div>
+        <div class="stat"><div class="num">∞</div><div class="lbl">Community</div></div>
+        <div class="stat"><div class="num">1</div><div class="lbl">First PR</div></div>
+        <div class="stat"><div class="num">🚀</div><div class="lbl">Your Career</div></div>
+      </div>
+      <div class="grid-3" style="text-align:left;">
+        <div class="card">
+          <div class="icon">🏆</div>
+          <h3>For you</h3>
+          <p>Visible portfolio, real code review, global network, career leverage.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🏢</div>
+          <h3>For your company</h3>
+          <p>Influence the roadmap of tools you depend on. Hire recognized contributors.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🌱</div>
+          <h3>For the ecosystem</h3>
+          <p>Every fix, doc, and test keeps critical infrastructure alive and secure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 9 · CLOSING / Q&A ── -->
+  <section class="slide bg-closing" data-index="8">
+    <div class="glow glow-blue"></div>
+    <div class="glow glow-cyan"></div>
+    <div style="text-align:center; max-width:800px;">
+      <div class="tag">Q &amp; A</div>
+      <h1 style="margin-bottom:.8rem;">Ask <span class="highlight">anything</span></h1>
+      <p class="sub" style="margin-bottom:2rem;">Your first PR is one issue away. Start small, be consistent, show up.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
+        <div class="event-badge">🐙 github.com/akrem-chabchoub</div>
+        <div class="event-badge">💼 linkedin.com/in/akrem-chabchoub</div>
+      </div>
+      <div class="quote" style="font-size:1.1rem;">
+        "The best time to open your first issue was yesterday. The second best time is right now."
+      </div>
+      <p style="margin-top:1.6rem; color:var(--muted); font-size:.85rem;">
+        Cloud Native Tunis · Tuesday 26 May · 7:00 PM · 🔗 lnkd.in/eRPh5uMt
+      </p>
+    </div>
+  </section>
+
+</div><!-- /deck -->
+
+<!-- ── NAVIGATION ── -->
+<nav class="nav" id="nav">
+  <button id="prev" onclick="go(-1)" title="Previous">&#8592;</button>
+  <div class="progress" id="dots"></div>
+  <button id="next" onclick="go(1)" title="Next">&#8594;</button>
+  <span class="slide-num" id="slideNum"></span>
+</nav>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let cur = 0;
+
+  const dotsEl    = document.getElementById('dots');
+  const slideNum  = document.getElementById('slideNum');
+  const prevBtn   = document.getElementById('prev');
+  const nextBtn   = document.getElementById('next');
+
+  // build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot-nav' + (i === 0 ? ' on' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('on');
+    cur = Math.max(0, Math.min(total - 1, n));
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('on');
+    slideNum.textContent = `${cur + 1} / ${total}`;
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === total - 1;
+  }
+
+  function go(d) { goTo(cur + d); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') go(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')  go(-1);
+  });
+
+  goTo(0);
+</script>
+</body>
+</html>
