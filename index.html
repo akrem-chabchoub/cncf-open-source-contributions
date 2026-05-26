@@ -299,7 +299,7 @@
         My path with <strong style="color:#fff">Kubeflow</strong> and the CNCF Ecosystem
       </p>
       <div style="margin-top:2.4rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-        <div class="event-badge">📅 Tuesday 26 May · 7:00 PM</div>
+        <div class="event-badge">📅 Tuesday 26 May · 7:00 PM CEST · 6:00 PM Tunis</div>
         <div class="event-badge">🌐 Online</div>
         <div class="event-badge">🎙 Akrem Chabchoub</div>
       </div>
@@ -326,6 +326,10 @@
           <span class="badge">Kubeflow</span>
           <span class="badge">CNCF</span>
           <span class="badge">Platform Engineering</span>
+        </div>
+        <div style="margin-bottom:.9rem;">
+          <span class="badge" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#6ee7b7;">Solar Punk</span>
+          <span style="font-size:.85rem; color:var(--muted); margin-left:.4rem;">Backend Engineer · Open Source · Decentralized Storage</span>
         </div>
         <div class="quote">
           "I started as someone who didn't know where to begin — and every step taught me something new."
@@ -390,14 +394,14 @@
           <div class="tl-dot">🧭</div>
           <div class="tl-body">
             <h3>First encounter</h3>
-            <p>Found Kubeflow while solving an ML infra problem at work. Noticed a bug, thought "I could fix this…"</p>
+            <p>A friend and colleague recommended Kubeflow — it was close to what we were doing at work, the team behind it was great, and it was backed by CNCF.</p>
           </div>
         </div>
         <div class="tl-item">
           <div class="tl-dot">😰</div>
           <div class="tl-body">
             <h3>The blockers</h3>
-            <p>Monorepo with 50k+ lines, zero docs on local dev setup, no idea which team owned what, imposter syndrome.</p>
+            <p>Big repo, ML was a new field for me, and imposter syndrome hit hard — that feeling of "who am I to contribute here?"</p>
           </div>
         </div>
         <div class="tl-item">
@@ -411,7 +415,10 @@
           <div class="tl-dot">🎉</div>
           <div class="tl-body">
             <h3>First merged PR</h3>
-            <p>A small docs fix. Felt bigger than it was — because it <em>was</em> real. Community noticed, more issues followed.</p>
+            <p>
+              <a href="https://github.com/kubeflow/notebooks/pull/134" target="_blank" style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.82rem;text-decoration:none;border-bottom:1px dashed rgba(0,210,255,.4);">kubeflow/notebooks #134</a>
+              — got multiple review comments. Felt personal at first, but it wasn't. It was the community making the code better. That's the process.
+            </p>
           </div>
         </div>
       </div>
@@ -439,6 +446,9 @@
           <div class="icon">🔍</div>
           <h3>Where to look</h3>
           <p style="margin-top:.4rem;">GitHub issue tracker, project roadmap, OWNERS files. Also: tests, linting, CI fixes — unglamorous but valued.</p>
+          <a href="https://goodfirstissue.dev/" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;color:var(--accent);font-size:.82rem;font-weight:600;text-decoration:none;border:1px solid rgba(0,210,255,.3);border-radius:8px;padding:.3rem .7rem;">
+            🌐 goodfirstissue.dev
+          </a>
         </div>
         <div class="card">
           <div class="icon">🎯</div>
@@ -471,7 +481,7 @@
             <li>Ask one clear question at a time</li>
             <li>Reference the issue number in your PR</li>
             <li>Respond to review comments quickly</li>
-            <li>Be patient — maintainers are volunteers</li>
+            <li>Be patient — maintainers may have tight schedules</li>
           </ul>
         </div>
         <div>
@@ -505,25 +515,81 @@
       <div class="grid-3" style="text-align:left;">
         <div class="card">
           <div class="icon">🏆</div>
-          <h3>For you</h3>
-          <p>Visible portfolio, real code review, global network, career leverage.</p>
+          <h3>For you — junior or senior</h3>
+          <p>Communication, collaboration, Git workflows, code review culture, new languages and tools — the community teaches all of it. You ship with big-tech standards: CI, LGTM, changelog, semver.</p>
         </div>
         <div class="card">
           <div class="icon">🏢</div>
           <h3>For your company</h3>
-          <p>Influence the roadmap of tools you depend on. Hire recognized contributors.</p>
+          <p>Influence the roadmap of tools you depend on. Hire recognized contributors. Solar Punk built its entire stack on open protocols — contributing back is part of the job.</p>
         </div>
         <div class="card">
           <div class="icon">🌱</div>
           <h3>For the ecosystem</h3>
-          <p>Every fix, doc, and test keeps critical infrastructure alive and secure.</p>
+          <p>Every fix, doc, and test keeps critical infrastructure alive. Decentralized storage like Swarm only works because engineers contribute openly and trust the process.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── SLIDE 9 · CLOSING / Q&A ── -->
-  <section class="slide bg-closing" data-index="8">
+  <!-- ── SLIDE 9 · FEARS VS REALITY ── -->
+  <section class="slide bg-surface" data-index="8">
+    <div class="glow glow-purple" style="opacity:.1"></div>
+    <div style="max-width:1000px; width:100%;">
+      <div class="tag">Before you start</div>
+      <h2 style="margin-bottom:1.6rem;">Fears vs. Reality</h2>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="card" style="border-color:rgba(248,113,113,.25); background:rgba(248,113,113,.05);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#f87171;margin-bottom:.5rem;">😟 Fear</div>
+            <p style="color:var(--text);">"My English isn't good enough"</p>
+          </div>
+          <div class="card" style="border-color:rgba(0,210,255,.25); background:rgba(0,210,255,.05);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;">✅ Reality</div>
+            <p>Maintainers are global. Communication is async, written, and patient — your idea matters more than your grammar.</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="card" style="border-color:rgba(248,113,113,.25); background:rgba(248,113,113,.05);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#f87171;margin-bottom:.5rem;">😟 Fear</div>
+            <p style="color:var(--text);">"I'll break something"</p>
+          </div>
+          <div class="card" style="border-color:rgba(0,210,255,.25); background:rgba(0,210,255,.05);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;">✅ Reality</div>
+            <p>PRs go through CI, automated tests, and at least one human review before anything merges. The process protects everyone.</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="card" style="border-color:rgba(248,113,113,.25); background:rgba(248,113,113,.05);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#f87171;margin-bottom:.5rem;">😟 Fear</div>
+            <p style="color:var(--text);">"I'm not senior enough"</p>
+          </div>
+          <div class="card" style="border-color:rgba(0,210,255,.25); background:rgba(0,210,255,.05);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;">✅ Reality</div>
+            <p>Good first issues exist for a reason. Review comments are teaching, not judging — I got many on my first PR and it made me better.</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="card" style="border-color:rgba(248,113,113,.25); background:rgba(248,113,113,.05);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#f87171;margin-bottom:.5rem;">😟 Fear</div>
+            <p style="color:var(--text);">"Review comments mean I failed"</p>
+          </div>
+          <div class="card" style="border-color:rgba(0,210,255,.25); background:rgba(0,210,255,.05);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;">✅ Reality</div>
+            <p>Comments are normal — even for seniors. Don't take them personally. It's the community investing time in you and in the code.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SLIDE 10 · CLOSING / Q&A ── -->
+  <section class="slide bg-closing" data-index="9">
     <div class="glow glow-blue"></div>
     <div class="glow glow-cyan"></div>
     <div style="text-align:center; max-width:800px;">
@@ -531,14 +597,18 @@
       <h1 style="margin-bottom:.8rem;">Ask <span class="highlight">anything</span></h1>
       <p class="sub" style="margin-bottom:2rem;">Your first PR is one issue away. Start small, be consistent, show up.</p>
       <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem;">
-        <div class="event-badge">🐙 github.com/akrem-chabchoub</div>
-        <div class="event-badge">💼 linkedin.com/in/akrem-chabchoub</div>
+        <div class="event-badge">
+          <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" style="width:18px;height:18px;border-radius:50%;vertical-align:middle;" alt="GitHub" />
+          github.com/akrem-chabchoub
+        </div>
+        <div class="event-badge">💼 linkedin.com/in/chebchoub</div>
+        <div class="event-badge">solar.punk</div>
       </div>
       <div class="quote" style="font-size:1.1rem;">
         "The best time to open your first issue was yesterday. The second best time is right now."
       </div>
       <p style="margin-top:1.6rem; color:var(--muted); font-size:.85rem;">
-        Cloud Native Tunis · Tuesday 26 May · 7:00 PM · 🔗 lnkd.in/eRPh5uMt
+        Cloud Native Tunis · Tuesday 26 May · 7:00 PM CEST / 6:00 PM Tunis · 🔗 lnkd.in/eRPh5uMt
       </p>
     </div>
   </section>
